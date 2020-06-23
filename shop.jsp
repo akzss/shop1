@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@page import="java.util.*,java.io.*" pageEncoding= "UTF-8"%>
-<form method=post action=check.jsp>
+<form method=post  action=check.jsp>
 <!doctype html>
 <html lang="en">
 <head>
