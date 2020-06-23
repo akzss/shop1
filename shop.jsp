@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@page import="java.util.*,java.io.*" pageEncoding= "UTF-8"%>
+<form method=post action=check.jsp>
 <!doctype html>
 <html lang="en">
 <head>
@@ -32,9 +33,10 @@
     fruits.put("Tomato",5.5);
 %>
 <h1>淘宝水果超市</h1>
+
 <%
-    String name=(String)session.getAttribute("username");
-    if(name==null){
+   String name = (String)session.getAttribute("username");
+   if(name==null){
        out.println( "您还没有登录，请<a href='login.jsp'>登录</a>");
    }else{
         car=( Map<String,Integer> )session.getAttribute("car");
