@@ -5,62 +5,100 @@
   Time: 17:29
   To change this template use File | Settings | File Templates.
 --%>
-<%@page import="java.util.*,java.io.*" pageEncoding= "UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="GB18030"%>
+<%@ page import="shopping.cart.*"%>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://"
+            + request.getServerName() + ":" + request.getServerPort()
+            + path + "/";
+%>
 <form method=post action=check.jsp>
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" >
-    <title>Document</title>
-    <style type="text/css" >
-        img {
-            width: 50px;
-            height: 40px;
-        }
-    </style>
-</head>
-<body>
-<%!
-    Map<String, Double> fruits=new TreeMap<>( );
-    Map<String,Integer> car=new TreeMap<>( );
-%>
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+    <html>
+    <head>
 
-<%
-    fruits.put("Apple",2.5);
-    fruits.put("Orange" ,3.5);
-    fruits.put("Banana" ,4.5);
-    fruits.put("Kiwi",7.5);
-    fruits.put("Tomato",5.5);
-%>
-<h1>æ·˜å®æ°´æœè¶…å¸‚</h1>
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">
+        <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+        <meta http-equiv="description" content="This is my page">
 
-<%
-   String name = (String)session.getAttribute("username");
-   if(name==null){
-       out.println( "æ‚¨è¿˜æ²¡æœ‰ç™»å½•ï¼Œè¯·<a href='login.jsp'>ç™»å½•</a>");
-   }else{
-        car=( Map<String,Integer> )session.getAttribute("car");
-%>
-<p>æ¬¢è¿<%=name%>
-<table border="1">
-    <tr>
-        <td>å›¾ç‰‡</td>
-        <td>å•†å“åç§°</td>
-        <td>å•ä»·</td>
-        <td>è´­ä¹°</td>
-    </tr>
-    <tr>
+    </head>
+
+    <body bgcolor="#ffffff">
         <%
-            for(String f:fruits.keySet()){
-                out.println(String.format("<tr><td><img src='%s'></td><td>%s</td><td>%.2f</td><td><a href='buy.jsp?name=%s'>BUY</a></td></tr>",f+".png",f,fruits.get(f),f));
+    Map products = new HashMap();
+    products.put("1", new Product("1", "Æ»¹û", 2.60));
+    products.put("2", new Product("2", "Ïã½¶", 6.50));
+    products.put("3", new Product("3", "³È×Ó", 3.10));
+    products.put("4", new Product("4", "»ğÁú¹û", 5.20));
+    products.put("5", new Product("5", "ÀóÖ¦", 22.00));
+    products.put("6", new Product("6", "Ñ¼Àæ",8.50));
+    products.put("7", new Product("7", "Î÷¹Ï",3.00));
+    products.put("8", new Product("8", "¹şÃÜ¹Ï",11.00));
+    products.put("9", new Product("9", "ÌÒ×Ó", 7.00));
+    session.setAttribute("products", products);
+%>
+    <h1>ÌÔ±¦Ë®¹û³¬ÊĞ</h1>
+        <%
+            String name = (String)session.getAttribute("username");
+            if(name==null){
+       out.println( "Äú»¹Ã»ÓĞµÇÂ¼£¬Çë<a href='login.jsp'>µÇÂ¼</a>");
+   }else{
 
+%>
+
+    <input type="hidden" name="action" value="purchase">
+    <table border="1" cellspacing="0">
+        <tr bgcolor="#CCCCCC">
+        <tr bgcolor="#CCCCCC">
+            <p>»¶Ó­<%=name%>
+            <td>
+                ĞòºÅ
+            </td>
+            <td>
+                Ë®¹ûÃû³Æ
+            </td>
+            <td>
+                Ë®¹ûµ¥Î»¼Û¸ñ£¨£¤/½ï£©
+            </td>
+
+            <td>
+                ¼ÓÈëµ½¹ºÎï³µ
+            </td>
+        </tr>
+        <%
+            Set productIdSet = products.keySet();
+            Iterator it = productIdSet.iterator();
+            int number = 1;
+            while (it.hasNext()) {
+                String id = (String) it.next();
+                Product product = (Product) products.get(id);
+        %><tr>
+        <td>
+            <%=number++%>
+        </td>
+        <td>
+            <%=product.getName()%>
+        </td>
+
+        <td>
+            <%=product.getPrice()%></td>
+        <td>
+            <a href="buy.jsp?id=<%=product.getId()%>&action=add" target="cart">ÎÒÒª¹ºÂò</a>
+
+
+
+        </td>
+    </tr>
+        <%
             }
         %>
-    </tr>
 
-
-</table>
-<%}%>
-<p>æŸ¥çœ‹æˆ‘çš„<a href="car.jsp">è´­ç‰©è½¦</a></p>
+    </table>
+    <p>
+    </p>
+        <%}%>
+</form>
 </body>
-</html>

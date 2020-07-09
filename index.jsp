@@ -15,7 +15,7 @@
 
 
       <%
-    String name = (String) session.getAttribute("username");
+    String name = (String)session.getAttribute("username");
     if (name == null) {
         out.println("您还没有登录，请<a href= 'login.jsp'>登录</a>");
 
@@ -23,7 +23,6 @@
   <p>欢迎<%=name%>
     <p><a href="shop.jsp">查看商城</a>
       <p><a href="car.jsp">我的购物车</a>
-        <p><a href="logout.jsp">退出</a>
           <%}%>
         </ body>
       </html>
